@@ -30,6 +30,8 @@ class plantaController extends Controller
         if($validator->fails()){
             return response()->json(["Error"=> $validator->errors()],422);
         }
+        $plans = Planta::create($validacion->validated());
+        return response()->json(["Planta :D"=> $plans],200);
 
     }
 

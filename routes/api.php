@@ -8,5 +8,7 @@ use App\Http\Controllers\api\plantaController;
 Route::post("/registrar", [usuarioController::class,"registrar"]);
 Route::post("/Login", [usuarioController::class,"Login"]);
 Route::get("/planta", [plantaController::class,"index"]);
+Route::post("/planta", [plantaController::class,"store"]);
+
 
 
