@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Observacion extends Model
 {
     use HasFactory;
+    protected $table="Observaciones";
     protected $fillable = [
         "nombre",
         "identificador",
@@ -18,11 +19,12 @@ class Observacion extends Model
         "ubicacion",
         "fisiografia",
         "fechaColecta",
+        "idPlanta",
     ]; 
 
     public function planta(){
-        return $this->belongsTo(Planta::class);
-
+        return $this->belongsTo(Planta::class,"idPlanta");
+        
     }
 
     public function aprobaciones(){

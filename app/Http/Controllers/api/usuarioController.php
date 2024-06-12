@@ -17,6 +17,7 @@ class usuarioController extends Controller
             "email"=> "required|email|unique:users",
             "img"=> "required|string",
             "password"=> "required|string",
+            "rol"=> "required|in:Onyx,Bronze",
         ]);
         if($validacion->fails()){
             return response()->json(["error"=>$validacion->errors()],422);

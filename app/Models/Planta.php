@@ -10,7 +10,7 @@ class Planta extends Model
     use HasFactory;
     protected $fillable = [
         "nombreCientifico",
-        "combreComun",
+        "nombreComun",
         "familia",
         "formaBiologica",
         "tipoVegetacion",

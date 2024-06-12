@@ -13,11 +13,10 @@ return new class extends Migration
     {
         Schema::create('observaciones', function (Blueprint $table) {
             $table->string("nombre");
-            $table->string("identificador");
             $table->string("colector");
             $table->string("idPlanta");
-            $table->double("longitud");
-            $table->double("latitud");
+            $table->string("longitud");
+            $table->string("latitud");
             $table->string("localidad");
             $table->string("ubicacion");
             $table->string("fisiografia");            

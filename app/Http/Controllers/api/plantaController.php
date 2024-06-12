@@ -30,9 +30,43 @@ class plantaController extends Controller
         if($validator->fails()){
             return response()->json(["Error"=> $validator->errors()],422);
         }
-        $plans = Planta::create($validacion->validated());
+        $plans = Planta::create($validator->validated());
         return response()->json(["Planta :D"=> $plans],200);
 
+    }
+
+    public function update(Request $request, $id){
+        $plan = Planta::find($id);
+
+        if(!$plan){
+            return response()->json(["Error update"=> "Planta no encontrada"],422);
+        }
+
+        $validator = Validator::make($request->all(), [
+            "nombreComun"=> "string",
+            "familia"=> "string",
+            "formaBiologica"=> "string",
+            "tipoVegetacion"=> "string",
+            "vulnerada"=> "string",
+            "infoAdicional"=> "string",
+        ]);
+      
+        if($validator->fails()){
+            return response()->json(["Error update"=> $validator->errors()],422);
+        }
+        
+        $plan->update($validacion->validated());
+        return response()->json(["Update exitosa"=> $plan],200);
+
+    }
+
+    public function destroy($id){
+        $plan = Planta::find($id);
+        if(!$plan){
+            $plan -> delete();
+            return response()->json(["message"=> "El usuario ha sido eliminado"],);
+        }
+        return response()->json(["message"=>"Dato no encontrado" ],404);
     }
 
 }
