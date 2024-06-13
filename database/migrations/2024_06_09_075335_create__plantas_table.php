@@ -15,6 +15,7 @@ return new class extends Migration
             $table->string("nombreCientifico");
             $table->string("nombreComun");
             $table->string("familia");
+            $table->string("habitat");
             $table->string("formaBiologica");
             $table->string("tipoVegetacion");
             $table->string("vulnerada");

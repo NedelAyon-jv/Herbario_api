@@ -10,10 +10,11 @@ use App\Http\Controllers\api\aprobacionesController;
 
 Route::post("/registrar", [usuarioController::class,"registrar"]);
 Route::post("/Login", [usuarioController::class,"Login"]);
+Route::get("/user", [usuarioController::class,"getUserData"])->middleware("auth:sanctum");
 Route::get("/planta", [plantaController::class,"index"]);
 Route::post("/planta", [plantaController::class,"store"]);
 Route::get("/Observacion", [observacionesController::class,"index"]);
-Route::post("/Observacion", [observacionesController::class,"store"]);
+Route::post("/Observacion", [observacionesController::class,"store"])->middleware("auth:sanctum");
 Route::patch("/Observacion/{id}", [observacionesController::class,"update"]);
 Route::delete("/Observacion/{id}", [observacionesController::class,"destroy"]);
 Route::get("/Aprobaciones", [aprobacionesController::class,"index"]);

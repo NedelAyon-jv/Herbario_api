@@ -10,9 +10,7 @@ class Observacion extends Model
     use HasFactory;
     protected $table="Observaciones";
     protected $fillable = [
-        "nombre",
-        "identificador",
-        "colector",
+        "userId",
         "longitud",
         "latitud",
         "localidad",
@@ -20,6 +18,7 @@ class Observacion extends Model
         "fisiografia",
         "fechaColecta",
         "idPlanta",
+        "img",
     ]; 
 
     public function planta(){
@@ -31,5 +30,8 @@ class Observacion extends Model
         return $this->belongTo(Aprobaciones::class);
     }
 
+    public function usuario(){
+        return $this->belongTo(User::class, "userId");
+    }
 
 }

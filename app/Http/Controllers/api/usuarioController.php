@@ -46,6 +46,13 @@ class usuarioController extends Controller
 
     }
 
+    public function getUserData(){
+        $userId = Auth::id();
+        $user = User::find($userId);
+        return response() -> json(["user"=> $user],200);
+
+    }
+
     public function Logout(Request $request){
         Auth::logout();
         $request ->session()->invalidate();

@@ -12,6 +12,7 @@ class Planta extends Model
         "nombreCientifico",
         "nombreComun",
         "familia",
+        "habitat",
         "formaBiologica",
         "tipoVegetacion",
         "vulnerada",

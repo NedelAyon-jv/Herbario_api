@@ -22,6 +22,7 @@ class plantaController extends Controller
             "nombreCientifico"=> "required|string",
             "nombreComun"=> "required|string",
             "familia"=> "required|string",
+            "habitat"=>"required|string",
             "formaBiologica"=> "required|string",
             "tipoVegetacion"=> "required|string",
             "vulnerada"=> "required|string",
@@ -31,8 +32,7 @@ class plantaController extends Controller
             return response()->json(["Error"=> $validator->errors()],422);
         }
         $plans = Planta::create($validator->validated());
-        return response()->json(["Planta :D"=> $plans],200);
-
+        return response()->json(["Data"=> $plans],200);
     }
 
     public function update(Request $request, $id){
@@ -45,6 +45,7 @@ class plantaController extends Controller
         $validator = Validator::make($request->all(), [
             "nombreComun"=> "string",
             "familia"=> "string",
+            "habitat"=>"string",
             "formaBiologica"=> "string",
             "tipoVegetacion"=> "string",
             "vulnerada"=> "string",

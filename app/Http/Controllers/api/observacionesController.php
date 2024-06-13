@@ -6,6 +6,7 @@ use App\Models\Planta;
 use Illuminate\Support\Facades\Validator;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class observacionesController extends Controller
 {
@@ -21,9 +22,8 @@ class observacionesController extends Controller
 
     //Almacena la observacion
     public function store(Request $request){
+        $userId = Auth::id();
         $validator = Validator::make($request->all(), [
-           "nombre"=> "required|string",
-            "colector"=> "required|string",
             "longitud"=> "required|string",
             "latitud"=> "required|string",
             "localidad"=> "required|string",
@@ -31,11 +31,17 @@ class observacionesController extends Controller
             "fisiografia"=> "required|string",
             "fechaColecta"=> "required|string",
             "idPlanta"=> "required|exists:plantas,id",
+            "img"=> "required|image|mimes:jpg,png,jpeg|max:2048",
         ]);
         if($validator->fails()){
             return response()->json(["Error"=> $validator->errors()],422);
         }
-        $obser = Observacion::create($validator->validated());
+        $validatorData = $validator -> validated();
+        $image = $request -> file("img");
+        $imagePath = $image->store('observacion', 'public');
+        $validatorData["img"] = $imagePath;
+        $validatorData["userId"] = $userId;
+        $obser = Observacion::create($validatorData);
         return response()->json(["Observação capturada"=> $obser],200);
        
     }  

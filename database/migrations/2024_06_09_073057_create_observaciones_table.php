@@ -12,8 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('observaciones', function (Blueprint $table) {
-            $table->string("nombre");
-            $table->string("colector");
+            $table->string("userId");
             $table->string("idPlanta");
             $table->string("longitud");
             $table->string("latitud");
@@ -21,6 +20,7 @@ return new class extends Migration
             $table->string("ubicacion");
             $table->string("fisiografia");            
             $table->string("fechaColecta");
+            $table->binary("img");
             $table->id();
             $table->timestamps();
         });
