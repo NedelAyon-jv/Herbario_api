@@ -47,4 +47,8 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+    public function observacion(){
+        return $this->hasMany(Observacion::class,"userId");
+    }
 }

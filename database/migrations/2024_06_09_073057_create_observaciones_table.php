@@ -20,7 +20,7 @@ return new class extends Migration
             $table->string("ubicacion");
             $table->string("fisiografia");            
             $table->string("fechaColecta");
-            $table->binary("img");
+            $table->string("img");
             $table->id();
             $table->timestamps();
         });

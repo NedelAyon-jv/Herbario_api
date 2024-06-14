@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\api;
 use App\Models\Observacion;
 use App\Models\Planta;
+use App\Models\User;
 use Illuminate\Support\Facades\Validator;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -31,7 +32,8 @@ class observacionesController extends Controller
             "fisiografia"=> "required|string",
             "fechaColecta"=> "required|string",
             "idPlanta"=> "required|exists:plantas,id",
-            "img"=> "required|image|mimes:jpg,png,jpeg|max:2048",
+            "img"=> "required|image|mimes:jpg,png,jpeg|max:40880",
+            "imgBase64"=>"required|string",
         ]);
         if($validator->fails()){
             return response()->json(["Error"=> $validator->errors()],422);
@@ -39,7 +41,7 @@ class observacionesController extends Controller
         $validatorData = $validator -> validated();
         $image = $request -> file("img");
         $imagePath = $image->store('observacion', 'public');
-        $validatorData["img"] = $imagePath;
+        $validatorData["img"] = $request->get("imgBase64");     
         $validatorData["userId"] = $userId;
         $obser = Observacion::create($validatorData);
         return response()->json(["Observação capturada"=> $obser],200);
