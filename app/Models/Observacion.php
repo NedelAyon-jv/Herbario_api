@@ -8,7 +8,6 @@ use Illuminate\Database\Eloquent\Model;
 class Observacion extends Model
 {
     use HasFactory;
-    protected $table="Observaciones";
     protected $fillable = [
         "userId",
         "longitud",
