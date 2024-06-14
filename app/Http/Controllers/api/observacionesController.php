@@ -8,18 +8,36 @@ use Illuminate\Support\Facades\Validator;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 
 class observacionesController extends Controller
 {
     //
     public function index(){
-        $obser = Observacion::with(['Planta'])->get();
-        if($obser->isEmpty()){
+        $obsers = Observacion::with(['Planta'])->get();
+        if($obsers->isEmpty()){
+            return response()->json(["Error"=> "não há dados"], 404);
+        }
+
+        $obserData = [];
+
+        foreach ($obsers as $obser) {
+            $obserArray = $obser->toArray();
+            $obserArray['img'] = Storage::url($obser->img);
+            $obserData[] = $obserArray;
+        };
+
+        return response()->json(["Data"=> $obsers],200);
+    }
+
+
+    public function show($id){
+        $obser = Observacion::with(['Planta'])->find($id);
+        if(!$obser){
             return response()->json(["Error"=> "não há dados"], 404);
         }
         return response()->json(["Data"=> $obser],200);
     }
-
 
     //Almacena la observacion
     public function store(Request $request){
@@ -39,9 +57,11 @@ class observacionesController extends Controller
             return response()->json(["Error"=> $validator->errors()],422);
         }
         $validatorData = $validator -> validated();
-        $image = $request -> file("img");
-        $imagePath = $image->store('observacion', 'public');
-        $validatorData["img"] = $request->get("imgBase64");     
+        $image = $request->file('img');
+        $filename = time() . '.' . $image->getClientOriginalExtension();
+        $imagePath = $image->storeAs('observacion', $filename, 'public');
+        $imageUrl = Storage::url($imagePath);
+        $validatorData["img"] = $imageUrl;   
         $validatorData["userId"] = $userId;
         $obser = Observacion::create($validatorData);
         return response()->json(["Observação capturada"=> $obser],200);
